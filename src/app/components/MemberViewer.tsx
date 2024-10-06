@@ -1,6 +1,7 @@
 "use client";
 
 import groq from "groq";
+import { PortableText } from "@portabletext/react";
 import { client } from "@/sanity/client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -29,8 +30,16 @@ const MemberViewer = ({ id }: { id: number }) => {
     return <></>;
   }
 
-  const { name, joined, nickname, nicknameDescription, description, roles } =
-    member;
+  const {
+    name,
+    joined,
+    nickname,
+    nicknameDescription,
+    description,
+    roles,
+    styledDescription,
+  } = member;
+
   return (
     <article className="flex flex-col justify-center gap-8 md:flex-row">
       <div className="w-80">
@@ -55,14 +64,17 @@ const MemberViewer = ({ id }: { id: number }) => {
         </div>
       </div>
       <div className="w-80">
-        <div>
+        <div className="flex flex-col gap-1">
           <h2 className="text-lg font-bold">Present</h2>
           <div className="flex flex-wrap">
             {(member.images || []).map((image) => (
               <GiftImage key={image.toString()} image={image} />
             ))}
           </div>
-          <div className="max-w-[56ch] italic">{description}</div>
+          <div>
+            {description}
+            <PortableText value={styledDescription} />
+          </div>
         </div>
       </div>
     </article>
