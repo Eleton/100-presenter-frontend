@@ -11,7 +11,11 @@ import { Member } from "../types";
 
 const GiftImage = ({ image }: { image: SanityImageSource }) => {
   const imageProps = useNextSanityImage(client, image);
-  return <Image {...imageProps} alt="" />;
+  return (
+    <div className="w-80">
+      <Image {...imageProps} alt="" />
+    </div>
+  );
 };
 
 const queryMember = (id: string) =>
@@ -41,7 +45,7 @@ const MemberViewer = ({ id }: { id: number }) => {
   } = member;
 
   return (
-    <article className="flex flex-col justify-center gap-8 md:flex-row">
+    <section className="flex flex-col justify-center gap-8 lg:flex-row">
       <div className="w-80">
         <div className="flex max-w-[56ch] flex-col gap-2">
           <h1 className="text-xl font-bold">
@@ -63,21 +67,21 @@ const MemberViewer = ({ id }: { id: number }) => {
           </div>
         </div>
       </div>
-      <div className="w-80">
+      <div>
         <div className="flex flex-col gap-1">
           <h2 className="text-lg font-bold">Present</h2>
-          <div className="flex flex-wrap">
-            {(member.images || []).map((image) => (
-              <GiftImage key={image.toString()} image={image} />
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            {(member.images || []).map((image, index) => (
+              <GiftImage key={`${id}-${index}`} image={image} />
             ))}
-          </div>
-          <div>
-            {description}
-            <PortableText value={styledDescription} />
+            <div className="w-80 p-1">
+              {description}
+              <PortableText value={styledDescription} />
+            </div>
           </div>
         </div>
       </div>
-    </article>
+    </section>
   );
 };
 
