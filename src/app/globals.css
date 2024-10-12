@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+a {
+  color: #0000ee;
+  text-decoration: underline;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
